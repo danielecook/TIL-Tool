@@ -13,6 +13,7 @@ signal(SIG_PIPE, SIG_IGN)
 const VERSION = "0.0.1"
 const TIL_DIR = getHomeDir().joinPath(".til")
 const README_PATH = getHomeDir().joinPath(".til").joinPath("README.md")
+const MAX_LEN = 25 # Maximum topic and title length
 
 type 
     til_object = ref object
@@ -40,6 +41,13 @@ proc success_msg(msg: string) =
 
 proc is_safe(check_str: string): bool =
     return check_str.match(re"^[0-9a-zA-Z-\._]+$").isSome
+
+proc check_input(check_str: string): bool = 
+    if check_str.len > MAX_LEN:
+        error_msg fmt"'{check_str}' can only be {MAX_LEN} characters long"
+    if check_str.is_safe() == false:
+        error_msg fmt"'{check_str}' must match '^[0-9a-zA-Z-\._]+$'"
+    return true
 
 proc check_comm(s: string) =
     # Checks that a command exists
@@ -138,16 +146,16 @@ var p = newParser("til"):
                 error_msg("Must specify TIL as topic/title")
             
             var 
-                folder_name, title, fpath: string
-            (folder_name, title) = opts.fname.split("/")
+                topic, title, fpath: string
+            (topic, title) = opts.fname.split("/")
 
             # Strip .md from end if it exists
             if title.to_lower().endsWith(".md"):
                 title = title[0..^4]
 
-            fpath = TIL_DIR.joinPath(folder_name).joinPath(fmt"{title}.md")
-            if folder_name.is_safe():
-                discard existsOrCreateDir(TIL_DIR.joinPath(folder_name))
+            fpath = TIL_DIR.joinPath(topic).joinPath(fmt"{title}.md")
+            if topic.check_input() and title.check_input():
+                discard existsOrCreateDir(TIL_DIR.joinPath(topic))
                 if fpath.fileExists() == false:
                     var f: File
                     if open(f, fpath, fmWrite):
@@ -157,7 +165,7 @@ var p = newParser("til"):
                             close(f)
                 let result = execCmd(editor_cmd(fpath))
                 if result == 0:
-                    success_msg(fmt"Successfully added {folder_name}/{title}")
+                    success_msg(fmt"Successfully added {topic}/{title}")
 
     command("ls"):
         arg("query", nargs = -1, help="Term to match on")
