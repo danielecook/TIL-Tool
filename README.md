@@ -1,6 +1,6 @@
 # TIL
 
-A very simple tool for creating and indexing TILs (Today I Learned)
+A very simple tool for creating and indexing TILs (Today I Learned) from the command line
 
 ## Usage
 
@@ -34,4 +34,4 @@ Use `til push` to push TILs to the default remote.
 
 ## Installation
 
-
+Download `til` from the releases and put it on your `PATH`.

@@ -118,11 +118,11 @@ proc build_readme() =
         try:
             f.writeLine("# TIL" & '\n')
             f.writeLine(fmt"TILs: {til_count}")
-            f.writeLine(fmt"Topics: {til_set.len()}")
+            f.writeLine(fmt"Topics: {til_set.len()}" & '\n')
             for topic in til_set.keys():
                 f.writeLine(fmt"## {topic}" & '\n')
                 for til in til_set[topic]:
-                    f.writeLine(fmt"""* [`{til.title}`]({til.topic}/{til.title}.md) {til.description} {til.date.format("yyyy-MM-dd")}""")
+                    f.writeLine(fmt"""* [`{til.title}`]({til.topic}/{til.title}.md) {til.description} ({til.date.format("yyyy-MM-dd")})""")
                 f.writeLine("")
         finally:
             close(f)
