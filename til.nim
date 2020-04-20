@@ -183,9 +183,6 @@ var p = newParser("til"):
         run:
             echo "Pushing"
 
-#echo list_tils()
-build_readme()
-
 if commandLineParams().len() == 0:
     p.run(@["-h"])
 else:
@@ -193,3 +190,6 @@ else:
         p.run(commandLineParams())
     except UsageError as E:
         error_msg(E.msg)
+
+# Rebuild the index at the end
+build_readme()
