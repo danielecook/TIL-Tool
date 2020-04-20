@@ -13,7 +13,7 @@ signal(SIG_PIPE, SIG_IGN)
 const VERSION = "0.0.1"
 const TIL_DIR = getHomeDir().joinPath(".til")
 const README_PATH = getHomeDir().joinPath(".til").joinPath("README.md")
-const MAX_LEN = 25 # Maximum topic and title length
+const MAX_LEN = 20 # Maximum topic and title length
 
 type 
     til_object = ref object
@@ -124,8 +124,8 @@ proc build_readme() =
     var f: File
     if open(f, README_PATH, fmWrite):
         try:
-            f.writeLine("# TIL" & '\n')
-            f.writeLine(fmt"TILs: {til_count}")
+            f.writeLine("# TIL" & '\n' & "> Today I Learned" & '\n')
+            f.writeLine(fmt"TILs: {til_count}" & '\n')
             f.writeLine(fmt"Topics: {til_set.len()}" & '\n')
             for topic in til_set.keys():
                 f.writeLine(fmt"## {topic}" & '\n')
@@ -187,7 +187,9 @@ var p = newParser("til"):
     command("push"):
         help("Push TILs to a repo")
         run:
-            echo "Pushing"
+            # Add files and commit
+            echo fmt"cd {TIL_DIR} && git add . && git commit -m 'update'"
+            discard execCmd(fmt"cd {TIL_DIR} && git add . && git commit -m 'update'")
 
 # Initialize
 discard existsOrCreateDir(TIL_DIR)
@@ -199,10 +201,6 @@ if dirExists(TIL_DIR.joinPath(".git")) == false:
 
 # Rebuild the index at the end
 build_readme()
-
-# Add files and commit
-echo fmt"cd {TIL_DIR} && git add . && git commit -m 'update'"
-discard execCmd(fmt"cd {TIL_DIR} && git add . && git commit -m 'update'")
 
 if commandLineParams().len() == 0:
     p.run(@["-h"])

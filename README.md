@@ -32,6 +32,19 @@ Use `ls` to list all TILs and details, or `ls <query>` to search TILs from the c
 
 Use `til push` to push TILs to the default remote.
 
+#### Adding a remote
+
+When adding a remote, you should use a new repo. The code below will configure `til` for a new repo.
+
+```bash
+# Change to the TIL directory
+cd ~/.til
+remote_url=https://github.com/username/today-i-learned.git
+git remote add origin "${remote_url}"
+git remote set-url --push origin "${remote_url}"
+git push --set-upstream origin master
+```
+
 ## Installation
 
 Download `til` from the releases and put it on your `PATH`.
