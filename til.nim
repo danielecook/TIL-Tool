@@ -26,8 +26,6 @@ type
 proc `$`(til: til_object) =
     echo fmt"""[{til.title}] {til.description} {til.date.format("yyyy-MM-dd")}"""
 
-# Init
-discard existsOrCreateDir(TIL_DIR)
 
 # Messages
 proc msg(msg: string) =
@@ -183,6 +181,21 @@ var p = newParser("til"):
         run:
             echo "Pushing"
 
+# Initialize
+discard existsOrCreateDir(TIL_DIR)
+if dirExists(TIL_DIR.joinPath(".git")) == false:
+    let git_init_result = execCmd(fmt"git init {TIL_DIR}")
+    if git_init_result != 0:
+        error_msg "Unable to initalize git repository. Is git installed?"
+
+
+# Rebuild the index at the end
+build_readme()
+
+# Add files and commit
+echo fmt"cd {TIL_DIR} && git add . && git commit -m 'update'"
+discard execCmd(fmt"cd {TIL_DIR} && git add . && git commit -m 'update'")
+
 if commandLineParams().len() == 0:
     p.run(@["-h"])
 else:
@@ -190,6 +203,3 @@ else:
         p.run(commandLineParams())
     except UsageError as E:
         error_msg(E.msg)
-
-# Rebuild the index at the end
-build_readme()
