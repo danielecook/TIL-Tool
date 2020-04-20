@@ -172,8 +172,8 @@ var p = newParser("til"):
         run:
             var til_set = list_tils()
             var output: bool
-            echo fmt"""{("Group".fgGreen & "/title"):<40}{"description":<20}{"date":<20}""".fgGreen
-            echo "-".repeat(80)
+            echo fmt"""{("Group".fgGreen & "/title"):<50}{"description":<40}{"date":<20}""".fgGreen
+            echo "-".repeat(100)
             for group, tils in til_set:
                 for til in tils:
                     let gt = group.fgGreen & "/" & til.title
@@ -182,7 +182,7 @@ var p = newParser("til"):
                     else:
                         output = true    
                     if output:
-                        echo fmt"""{gt:<40}{til.description:<40}{til.date.format("yyyy-MM-dd"):<20}"""
+                        echo fmt"""{gt:<50}{til.description:<40}{til.date.format("yyyy-MM-dd"):<20}"""
 
     command("push"):
         help("Push TILs to a repo")
