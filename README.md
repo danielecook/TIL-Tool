@@ -1,6 +1,10 @@
+![CI](https://github.com/danielecook/TIL/workflows/CI/badge.svg?branch=master)
+
 # TIL
 
-A simple tool for creating and indexing TILs (Today I Learned) from the command line. See an example of what it outputs [here](https://www.github.com/danielecook/til-dec).
+A simple tool for creating and indexing TILs (Today I Learned) from the command line. 
+
+[Example TIL Repo](https://www.github.com/danielecook/til-dec).
 
 ## Quick Start
 
@@ -21,7 +25,7 @@ Open a TIL by specifying the `<topic>/<title>`
 til open Python/list_comprehensions
 ```
 
-This will open a new document using the text editor set using `$EDITOR`. The document has a header which is where you can write a more thorough description.
+This will open a new document using the text editor set using `$EDITOR`. The document has a header which acts as a more thorough description than the title/filename:
 
 ```markdown
 # syntactic sugar for modifying items in a list
@@ -29,9 +33,9 @@ This will open a new document using the text editor set using `$EDITOR`. The doc
 ...
 ```
 
-On first use `til` creates a folder at `~/.til` and initiates a git repo. You can [add a remote](https://help.github.com/en/github/importing-your-projects-to-github/adding-an-existing-project-to-github-using-the-command-line) to push TILs to GitHub or other GIT services.
+On first use `til` creates a folder at `~/.til` and initiates a git repo. See [Adding a remote](#Adding-a-remote) for details on how to push TILs to GitHub or other GIT services.
 
-TILs are saved to `~/.til/<topic>/<title>`, and a README index is regenerated on every run. Then all changes are committed automatically.
+TILs are saved to `~/.til/<topic>/<title>`, and a README index is regenerated on every run.
 
 ### `ls`
 
@@ -39,7 +43,7 @@ Use `ls` to list all TILs and details, or `ls <query>` to search TILs from the c
 
 ### `push`
 
-Use `til push` to push TILs to the default remote.
+Use `til push` to add TILs, commit, and to your remote repo.
 
 #### Adding a remote
 
@@ -60,3 +64,28 @@ git remote add origin "${remote_url}"
 git remote set-url --push origin "${remote_url}"
 git push --set-upstream origin master
 ```
+
+## Setting the `$EDITOR`
+
+You can configure which editor to use by setting the `$EDITOR` variable. For example:
+
+```bash
+EDITOR=nano til open python/list_comprehensions
+```
+
+Alternatively, you can stick this in your `.bash_profile`:
+
+```bash
+export EDITOR=nano
+```
+
+`til` should work wil almost any program, but you must be able to open a file by specifying it as an argument.
+
+Editors that work well:
+
+* sublime text (specify using `subl`, and ensure that the shell commands are installed)
+* atom (install shell commands
+* vscode (install shell commands)
+* vim/vi
+* emacs
+* nano
