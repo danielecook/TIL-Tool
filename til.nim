@@ -207,8 +207,8 @@ var p = newParser("til"):
             if opts.remote != "":
                 let (outp, err) = execCmdEx(&"""cd ~/.til && \
                                              git remote remove origin || true && \
-                                             git remote add origin "${opts.remote}" && \
-                                             git remote set-url --push origin "${opts.remote}" && \
+                                             git remote add origin "{opts.remote}" && \
+                                             git remote set-url --push origin "{opts.remote}" && \
                                              git push --set-upstream origin master""")
                 if err != 0:
                     error_msg &"[{err}] {outp.strip()}"

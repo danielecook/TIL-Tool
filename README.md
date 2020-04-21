@@ -4,7 +4,7 @@
 
 A simple tool for creating and indexing TILs (Today I Learned) from the command line. 
 
-[Example TIL Repo](https://www.github.com/danielecook/til-dec).
+__[Example TIL Repo](https://www.github.com/danielecook/til-dec)__
 
 ## Quick Start
 
