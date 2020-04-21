@@ -8,8 +8,7 @@ A simple tool for creating and indexing TILs (Today I Learned) from the command 
 
 ## Quick Start
 
-
-1. Download a `til` binary from releases and put it on your `PATH`
+1. Download a [`til` binary](https://github.com/danielecook/TIL/releases) from the latest release and add it to your `PATH`
 2. Run `til`. On first run it will create the `~/.til` directory and initialize a git repo
 3. Create your first TIL by running `til open topic/title`
 4. Create a new, empty repo on [github](https://www.github.com), [gitlab](https://www.gitlab.com), [sourcehut](https://sourcehut.org/), etc.
