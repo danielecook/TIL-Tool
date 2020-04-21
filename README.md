@@ -1,6 +1,6 @@
 ![CI](https://github.com/danielecook/TIL/workflows/CI/badge.svg?branch=master)
 
-# TIL
+# TIL Tool
 
 A simple tool for creating and indexing TILs (Today I Learned) from the command line. 
 
