@@ -32,7 +32,7 @@ jobs:
           nim-version: 1.0.6 # optional, default is stable
 
     - name: Build executable
-      run: nimble build til.nimble && chmod +x til && mkdir bin && mv til bin
+      run: nimble build -y til.nimble && chmod +x til && mkdir bin && mv til bin
     
     - name: Upload Artifact
       uses: actions/upload-artifact@v1.0.0
