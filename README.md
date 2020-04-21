@@ -4,7 +4,7 @@
 
 A simple tool for creating and indexing TILs (Today I Learned) from the command line. 
 
-__[Example TIL Repo](https://www.github.com/danielecook/til-dec)__
+### [Example TIL Repo](https://www.github.com/danielecook/til-dec)
 
 ## Quick Start
 
@@ -88,3 +88,7 @@ Editors that work well:
 * vim/vi
 * emacs
 * nano
+
+# Conributing
+
+Please feel free to submit issues for bugs and suggestions.
