@@ -30,3 +30,13 @@ jobs:
       with:
           # The Nim version to download (if necessary) and use. Example: 1.0.2
           nim-version: 1.0.6 # optional, default is stable
+
+    - name: Build executable
+      run: nimble build til.nimble && chmod +x til && mkdir bin && mv til bin
+    
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v1.0.0
+      with:
+        # Artifact name
+          name: til
+          path: bin
