@@ -34,7 +34,7 @@ This will open a new document using the text editor set using `$EDITOR`. The doc
 
 On first use `til` creates a folder at `~/.til` and initiates a git repo. See [Adding a remote](#Adding-a-remote) for details on how to push TILs to GitHub or other GIT services.
 
-TILs are saved to `~/.til/<topic>/<title>`, and a README index is regenerated on every run.
+TILs are saved to `~/.til/<topic>/<title>`. Once you close the document, a `README.md` is regenerated.
 
 ### `ls`
 
@@ -42,7 +42,7 @@ Use `ls` to list all TILs and details, or `ls <query>` to search TILs from the c
 
 ### `push`
 
-Use `til push` to add TILs, commit, and to your remote repo.
+Use `til push` to add TILs, commit, and to your remote repo. The `README.md` is regenerated prior to any files being pushed.
 
 #### Adding a remote
 
