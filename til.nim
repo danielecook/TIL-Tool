@@ -14,7 +14,7 @@ import times
 from posix import signal, SIG_PIPE, SIG_IGN
 signal(SIG_PIPE, SIG_IGN)
 
-const VERSION = "0.0.1"
+const VERSION = "0.0.2"
 const TIL_DIR = getHomeDir().joinPath(".til")
 const README_PATH = getHomeDir().joinPath(".til").joinPath("README.md")
 const MAX_LEN = 20 # Maximum topic and title length
