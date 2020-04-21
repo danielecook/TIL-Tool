@@ -1,3 +1,7 @@
+# TIL (Today I Learned)
+# Author: Daniel E. Cook
+# danielecook.com
+import algorithm
 import os
 import strformat
 import strutils
@@ -112,7 +116,12 @@ proc list_tils(): Table[string, seq[til_object]] =
                            date: til_fname.getCreationTime())
             all_tils[topic].add(til)
     return all_tils
-        
+
+proc case_insensitive_sort(x, y: string): int =
+  if x.to_lower() < y.to_lower(): -1
+  elif x.to_lower() == y.to_lower(): 0
+  else: 1
+
 proc build_readme() =
     var til_set = list_tils()
 
@@ -122,12 +131,16 @@ proc build_readme() =
         til_count += topic_tils.len
 
     var f: File
+    var topic_set = new_seq[string]()
     if open(f, README_PATH, fmWrite):
         try:
             f.writeLine("# TIL" & '\n' & "> Today I Learned" & '\n')
-            f.writeLine(fmt"TILs: {til_count}" & '\n')
-            f.writeLine(fmt"Topics: {til_set.len()}" & '\n')
-            for topic in til_set.keys():
+            f.writeLine(fmt"* TILs: {til_count}")
+            f.writeLine(fmt"* Topics: {til_set.len()}" & '\n')
+            for key in til_set.keys():
+                topic_set.add(key)
+            topic_set.sort(case_insensitive_sort)
+            for topic in topic_set:
                 f.writeLine(fmt"## {topic}" & '\n')
                 for til in til_set[topic]:
                     f.writeLine(fmt"""* [`{til.title}`]({til.topic}/{til.title}.md) {til.description} ({til.date.format("yyyy-MM-dd")})""")
@@ -164,6 +177,7 @@ var p = newParser("til"):
                         finally:
                             close(f)
                 let result = execCmd(editor_cmd(fpath))
+                build_readme()
                 if result == 0:
                     success_msg(fmt"Successfully added {topic}/{title}")
 
@@ -186,10 +200,20 @@ var p = newParser("til"):
 
     command("push"):
         help("Push TILs to a repo")
+        option("-r", "--remote", help="Setup remote and configure as default")
         run:
+            build_readme()
             # Add files and commit
-            echo fmt"cd {TIL_DIR} && git add . && git commit -m 'update'"
-            discard execCmd(fmt"cd {TIL_DIR} && git add . && git commit -m 'update'")
+            if opts.remote != "":
+                let (outp, err) = execCmdEx(&"""cd ~/.til && \
+                                             git remote remove origin || true && \
+                                             git remote add origin "${opts.remote}" && \
+                                             git remote set-url --push origin "${opts.remote}" && \
+                                             git push --set-upstream origin master""")
+                if err != 0:
+                    error_msg &"[{err}] {outp.strip()}"
+            msg "Adding TILs, commiting, and pushing"
+            discard execCmd(fmt"cd {TIL_DIR} && git add . && git commit -m 'Update on {times.getDateStr()}' && git push")
 
 # Initialize
 discard existsOrCreateDir(TIL_DIR)
@@ -197,10 +221,6 @@ if dirExists(TIL_DIR.joinPath(".git")) == false:
     let git_init_result = execCmd(fmt"git init {TIL_DIR}")
     if git_init_result != 0:
         error_msg "Unable to initalize git repository. Is git installed?"
-
-
-# Rebuild the index at the end
-build_readme()
 
 if commandLineParams().len() == 0:
     p.run(@["-h"])

@@ -1,18 +1,12 @@
 # Package
 
-version       = "0.0.2"
+version       = "0.0.1"
 author        = "Daniel E. Cook"
-description   = "seq-collection: Sequence data utilities"
+description   = "til: Today I Learned tool"
 license       = "MIT"
 
 # Dependencies
-
 requires "colorize"
 requires "argparse"
 
 bin = @["til"]
-skipDirs = @["test"]
-
-task test, "run tests":
-  exec "bash ./scripts/functional-tests.sh"
-  #exec "nim c --threads:on -d:release --lineDir:on --debuginfo -r tests/all"
