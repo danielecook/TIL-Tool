@@ -4,7 +4,7 @@
 
 A simple tool for creating and indexing TILs (Today I Learned) from the command line.  The idea is to make it quick and easy to add a TIL without interrupting your workflow very much.
 
-### [Example TIL Repo](https://www.github.com/danielecook/til-dec)
+### [Example TIL Repo](https://www.github.com/danielecook/til)
 
 ## Quick Start
 
