@@ -205,15 +205,16 @@ var p = newParser("til"):
             build_readme()
             # Add files and commit
             if opts.remote != "":
-                let (outp, err) = execCmdEx(&"""cd ~/.til && \
-                                             git remote remove origin || true && \
-                                             git remote add origin "{opts.remote}" && \
-                                             git remote set-url --push origin "{opts.remote}" && \
-                                             git push --set-upstream origin master""")
+                var comm = &"""cd ~/.til && \
+                                                (git remote remove origin || true) && \
+                                                git remote add origin "{opts.remote}" && \
+                                                git remote set-url --push origin "{opts.remote}""""
+                msg comm
+                let (outp, err) = execCmdEx(comm)
                 if err != 0:
                     error_msg &"[{err}] {outp.strip()}"
             msg "Adding TILs, commiting, and pushing"
-            discard execCmd(fmt"cd {TIL_DIR} && git add . && git commit -m 'Update on {times.getDateStr()}' && git push")
+            discard execCmd(fmt"cd {TIL_DIR} && git add . && git commit -m 'Update on {times.getDateStr()}' && git push --set-upstream origin master")
 
 # Initialize
 discard existsOrCreateDir(TIL_DIR)
