@@ -1,8 +1,8 @@
 # Package
 
-version       = "0.0.1"
+version       = "0.0.3"
 author        = "Daniel E. Cook"
-description   = "til: Today I Learned tool"
+description   = "til-tool: Today I Learned tool"
 license       = "MIT"
 
 # Dependencies
