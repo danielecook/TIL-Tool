@@ -40,7 +40,7 @@ Use `ls` to list all TILs and details, or `ls <query>` to search TILs from the c
 
 ### `push`
 
-Use `til push` to add TILs, commit, and to your remote repo. The `README.md` is regenerated prior to any files being pushed.
+Use `til push` to add TILs, commit, and push to your remote repo. The `README.md` is regenerated prior to any files being pushed.
 
 #### Adding a remote
 
